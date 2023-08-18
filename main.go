@@ -14,7 +14,6 @@ import (
 const PORT = ":8000"
 
 func main() {
-	db.MigrateTable("group_users")
 	db.InitDatabase()
 	// handling url routes
 	fs := http.FileServer(http.Dir("./frontend/build"))
