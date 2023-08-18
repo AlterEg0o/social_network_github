@@ -305,6 +305,30 @@ func ToggleFollower(follower string, following string) {
 	}
 }
 
+func GetFollowing(username string) []string{
+	db := OpenDB()
+	defer db.Close()
+
+	followings := []string{}
+	var following string
+
+	rows, err := db.Query("SELECT following FROM followers WHERE follower=?", username)
+	if err != nil {
+		fmt.Println("error getting user profil data :", err.Error())
+	}
+
+	if rows == nil {
+		return followings
+	}
+
+	for rows.Next() {
+		rows.Scan(&following)
+		followings = append(followings, following)
+	}
+
+	return followings
+}
+
 func Follow(database *sql.DB, follower string, following string) {
 	statement, err := database.Prepare("INSERT INTO followers (follower, following) VALUES (?,?)")
 	if err != nil {

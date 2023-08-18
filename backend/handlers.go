@@ -85,7 +85,20 @@ func Register(event Event, client *Client) error {
 func SendProfilData(event Event, client *Client) error {
 	data := db.GetProfilData(client.username)
 
-	client.SendFeedback("profilData", data)
+	database := db.OpenDB()
+	followers := db.GetFollowers(database,client.username)
+	database.Close()
+
+	following := db.GetFollowing(client.username)
+
+
+
+	client.SendFeedback("profilData", ProfilData{
+		Data: data,
+		Followers: followers,
+		Followings: following,
+		Posts: []db.Post{},
+	})
 
 	return nil
 }

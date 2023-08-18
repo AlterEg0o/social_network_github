@@ -7,7 +7,6 @@ import RegisterForm from './pages/register_form/registerForm.jsx';
 import Profil from './pages/profil/profil';
 import NoPage from './pages/NoPage/noPage.jsx';
 import Posts from './pages/posts/posts';
-import Group from './pages/groups/groups';
 import ChatPage from './pages/chatPage/chatPage';
 
 export function App() {
@@ -16,7 +15,8 @@ export function App() {
   const [users,setUsers] = useState([]);
   const [posts,setPosts] = useState([]);
   const [comments,setComments] = useState([]);
-  const [conversation, setConversation] = useState([])
+  const [followers, setFollowers] = useState([]);
+  const [followings, setFollowings] = useState([]);
 
   useEffect(() => {
     function HandleMessage(message) {
@@ -35,11 +35,17 @@ export function App() {
               break;
 
           case "profilData":
+            console.log("profil data : ",msg.payload)
+
+            const userData = msg.payload.Data
             setUser({...user,
-              username: msg.payload.Username,
-              fullname: msg.payload.Fullname,
-              aboutMe:  msg.payload.AboutMe
+              username: userData.Username,
+              fullname: userData.Fullname,
+              aboutMe:  userData.AboutMe
             });
+
+            setFollowers(msg.payload.Followers)
+            setFollowings(msg.payload.Followings)
             break;
 
           case "posts":
@@ -55,11 +61,8 @@ export function App() {
             break;
           case "chatUsers":
             console.log("chat users : ",msg.payload)
-            setUsers(msg.payload)
-            break;
-
-            case "displayConversation": 
-            setConversation(msg.payload)
+              setUsers(msg.payload)
+            
             break;
 
           default:
@@ -95,7 +98,7 @@ export function App() {
 
           <Route
             path='/profil'
-            element={<Profil user={user}/>}>
+            element={<Profil user={user} followers={followers} followings={followings}/>}>
           </Route>
 
           <Route
@@ -105,13 +108,8 @@ export function App() {
 
           <Route
           path='/chat'
-          element={<ChatPage conversation = {conversation} users={users}/>}>
-          </Route>
-
-          <Route 
-          path='/groups'
-          element={<Group users={users}></Group>}>
-          </Route>
+          element={<ChatPage users={users}/>}>
+          </Route>  
 
           <Route path="*" element={<NoPage/>}></Route>
 

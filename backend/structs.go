@@ -3,6 +3,8 @@ package backend
 import (
 	"sync"
 
+	"ws_config/backend/db"
+
 	"github.com/gorilla/websocket"
 )
 
@@ -12,11 +14,9 @@ var websocketUpgrader = websocket.Upgrader{
 }
 
 type Event struct {
-	Type    string   `json:"type"`
+	Type    string      `json:"type"`
 	Payload interface{} `json:"payload"`
 }
-
-
 
 type EventHandler func(event Event, client *Client) error
 
@@ -40,4 +40,9 @@ type LoginForm struct {
 	Password   string `json:"password"`
 }
 
-
+type ProfilData struct {
+	Data       db.User
+	Followers  []string
+	Followings []string
+	Posts      []db.Post
+}
