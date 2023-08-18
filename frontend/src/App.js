@@ -8,6 +8,7 @@ import Profil from './pages/profil/profil';
 import NoPage from './pages/NoPage/noPage.jsx';
 import Posts from './pages/posts/posts';
 import ChatPage from './pages/chatPage/chatPage';
+import Group from './pages/groups/groups';
 
 export function App() {
   const [feedback, setFeedback] = useState('');
@@ -109,7 +110,12 @@ export function App() {
           <Route
           path='/chat'
           element={<ChatPage users={users}/>}>
-          </Route>  
+          </Route>
+
+          <Route
+            path="/groups"
+            element={<Group users={users}/>}>
+          </Route>
 
           <Route path="*" element={<NoPage/>}></Route>
 
