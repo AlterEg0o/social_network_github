@@ -19,8 +19,8 @@ export default function Profil({user,followers,followings}){
         <div className='activity-and-followers'>
             <UserActivity/>
             <div>
-                <UserList title="followers" list={[]}/>
-                <UserList title="following" list={[]}/>
+                <UserList title="followers" list={followers}/>
+                <UserList title="following" list={followings}/>
             </div>
         </div>
     </div>)
