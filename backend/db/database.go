@@ -442,3 +442,21 @@ func InitGroupDB(creator string, participants []string, title string) {
 		statement.Exec(participant, title, false)
 	}
 }
+
+func CreateNotif(user string, notifType string, description string) {
+	db := OpenDB()
+	defer db.Close()
+
+	statement, err := db.Prepare("INSERT INTO notifications (user, type, description) VALUES (?,?,?)")
+	if err != nil {
+		fmt.Println("cannot insert row into users :", err.Error())
+	}
+	defer statement.Close()
+
+	_, err = statement.Exec(user, notifType, description)
+	if err != nil {
+		fmt.Println("error Adding follower :", err.Error())
+	}
+
+	fmt.Println("notif created successfully !")
+}

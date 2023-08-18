@@ -1,0 +1,6 @@
+.Notifications{
+    min-height: 10vh;
+    width: 30vw;
+    background-color: rgb(30, 30, 30);
+    border: 2px solid white;
+}
