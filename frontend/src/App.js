@@ -18,6 +18,7 @@ export function App() {
   const [comments,setComments] = useState([]);
   const [followers, setFollowers] = useState([]);
   const [followings, setFollowings] = useState([]);
+  const [conversation, setConversation] = useState([]);
 
   useEffect(() => {
     function HandleMessage(message) {
@@ -65,6 +66,9 @@ export function App() {
               setUsers(msg.payload)
             
             break;
+            case "displayConversation":
+              setConversation(msg.payload)
+              break;
 
           default:
               console.log("WARNING : unknown server message type !")
@@ -109,7 +113,7 @@ export function App() {
 
           <Route
           path='/chat'
-          element={<ChatPage users={users}/>}>
+          element={<ChatPage users={users} conversation={conversation}/>}>
           </Route>
 
           <Route
