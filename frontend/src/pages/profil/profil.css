@@ -1,0 +1,18 @@
+
+.profil{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.wrapper{
+    display: flex;
+    flex-direction: column;
+}
+
+.activity-and-followers{
+    display: flex;
+    flex-direction: row;
+    width: 70%;
+}

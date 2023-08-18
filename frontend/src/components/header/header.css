@@ -1,0 +1,35 @@
+.header {
+    background-color: #24272f;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px;
+    font-family: Arial, sans-serif;
+    color: #ffffff;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  
+  .header a {
+    text-decoration: none;
+    color: inherit;
+    padding: 5px 10px;
+    transition: color 0.3s;
+  }
+  
+  .header a:hover {
+    color: rgb(193, 59, 59);
+  }
+  
+  .header a.active {
+    color: rgb(193, 59, 59);
+  }
+
+  .disconnect{
+    border-radius: 5px;
+    border: 2px solid rgb(193, 59, 59) ;
+  }
+
+  .disconnect:hover{
+    cursor: pointer;
+  }

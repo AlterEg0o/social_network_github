@@ -1,0 +1,9 @@
+.userChoice{
+    color: white;
+    border: 1px solid white;
+    padding: 3px;
+}
+
+.userChoice:hover{
+    cursor: pointer;
+}

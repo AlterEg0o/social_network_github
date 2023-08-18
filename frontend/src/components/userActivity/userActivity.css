@@ -1,0 +1,14 @@
+.userActivity{
+    min-height: 50vh;
+    width: 70%;
+    
+    color: #ffffff;
+
+   
+}
+
+.block{
+    background-color: #2f3136;
+    border-radius: 10px;
+    margin: 10px;
+}

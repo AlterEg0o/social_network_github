@@ -1,0 +1,111 @@
+:root {
+--gray: #34495e;
+--darkgray: #2c3e50;
+--blue: #2b66a0;
+}
+
+.submitPosts{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+textarea{
+    font-size: 130%;
+    background-color: var(--gray);
+    border: none;
+    border-bottom: none;
+    color: white;
+    transition: 500ms;
+    width: 50vw;
+    outline: none;
+}
+
+label{
+    color: white;
+    background-color: var(--darkgray);
+    cursor: pointer;
+    font-weight: 900;
+    padding: 5px 0 5px 2px;
+    width: 50vw;
+    text-align: left;
+    margin-bottom: 10px;
+}
+
+.submit-and-privacy{
+    display: flex;
+    flex-direction: row;    
+    justify-content: space-between;
+    width: 50vw;
+}
+
+input[type="file"]{
+    display: none;
+}
+
+input[type="submit"]{
+    color: white;
+    background-color: #2c3e50;
+    border: 2px solid #34495e;
+    border-radius: 10px;
+    width: 20%;
+    font-size: 100%;
+    transition: 500ms;
+}
+
+input[type="submit"]:hover{
+    background-color: var(--blue);
+    border: 2px solid var(--darkgray);
+    cursor: pointer;
+}
+
+
+select {
+/* Reset Select */
+appearance: none;
+outline: 0;
+border: 0;
+box-shadow: none;
+/* Personalize */
+flex: 1;
+padding: 0 1em;
+color: #fff;
+background-color: var(--darkgray);
+background-image: none;
+cursor: pointer;
+}
+/* Remove IE arrow */
+select::-ms-expand {
+display: none;
+}
+/* Custom Select wrapper */
+.select {
+position: relative;
+display: flex;
+width: 15em;
+height: 3em;
+border-radius: .25em;
+overflow: hidden;
+}
+/* Arrow */
+.select::after {
+content: '\25BC';
+position: absolute;
+top: 0;
+right: 0;
+padding: 1em;
+background-color: #34495e;
+transition: .25s all ease;
+pointer-events: none;
+}
+/* Transition */
+.select:hover::after {
+color: var(--blue);
+}
+
+.drop-area{
+    color: white;
+    border: 1px solid white;
+}
+

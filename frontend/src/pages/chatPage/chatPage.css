@@ -1,0 +1,4 @@
+.chatPage {
+    display: flex;
+    flex-direction: column;
+}

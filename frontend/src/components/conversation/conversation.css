@@ -1,0 +1,41 @@
+.pseudonyme {
+    font-size: 20px;
+    color: rgb(237, 237, 237);
+}
+
+
+
+.input {
+    flex-direction: column;
+}
+
+.msg {
+    align-self: center;
+    background-color: rgba(49, 49, 49, 0.895);
+    border: solid 2px rgb(162, 162, 162);
+    border-radius: 4px;
+}
+
+
+.date {
+    padding: 10px;
+}
+
+.conversation-container {
+    background-color: azure;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-self: center;
+}
+
+.input-chat {
+    align-self: center;
+    margin: 5px;
+}
+
+.button-chat {
+    align-self: center;
+}
