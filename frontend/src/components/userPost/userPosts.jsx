@@ -5,9 +5,6 @@ import CommentForm from "../commentForm/commentForm";
 import { SendEvent } from "../../api/websockets";
 
 export default function UserPost({post,comments}){
-    useEffect(()=>{
-        console.log()
-    })
 
     const [commentsIsExtended, setCommentsIsExtended] = useState(false);
 
@@ -16,7 +13,6 @@ export default function UserPost({post,comments}){
             SendEvent("requestComments",post.Id)
         }
         setCommentsIsExtended(!commentsIsExtended)
-        
     }
 
     return (

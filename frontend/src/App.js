@@ -49,15 +49,14 @@ export function App() {
 
             setFollowers(msg.payload.Followers)
             setFollowings(msg.payload.Followings)
+            setPosts(msg.payload.Posts)
             break;
 
           case "posts":
-            console.log("App posts : ",msg.payload)
             setPosts(msg.payload)
             break;
 
           case "comments":
-            console.log("App comments : ",msg.payload)
             if (msg.payload){
               setComments(msg.payload)
             }
@@ -114,7 +113,7 @@ export function App() {
 
           <Route
             path='/profil'
-            element={<Profil user={user} followers={followers} followings={followings}/>}>
+            element={<Profil user={user} followers={followers} followings={followings} posts={posts} comments={comments}/>}>
           </Route>
 
           <Route

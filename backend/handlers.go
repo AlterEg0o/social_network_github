@@ -91,11 +91,18 @@ func SendProfilData(event Event, client *Client) error {
 
 	following := db.GetFollowing(client.username)
 
+	userPost := []db.Post{}
+	for _, post := range db.GetPosts(client.username){
+		if post.Author == client.username{
+			userPost = append(userPost, post)
+		}
+	}
+	
 	client.SendFeedback("profilData", ProfilData{
 		Data:       data,
 		Followers:  followers,
 		Followings: following,
-		Posts:      []db.Post{},
+		Posts:      userPost,
 	})
 
 	return nil

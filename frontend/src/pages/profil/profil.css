@@ -16,3 +16,14 @@
     flex-direction: row;
     width: 70%;
 }
+
+.profil-follow{
+    background-color: #2f3136;
+    padding: 20px;
+    margin: 10px;
+    border-radius: 10px;
+}
+
+.profil-follow>h2, span{
+    color: white;
+}
