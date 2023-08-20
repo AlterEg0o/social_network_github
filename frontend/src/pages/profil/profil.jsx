@@ -27,8 +27,8 @@ export default function Profil({user,followers,followings,posts,comments}){
 
                 <div className='col profil-follow'>
                     <h2>followings</h2>
-                    {followings && followers.map((follower,index) => (
-                        <span key={index}>{follower}</span>
+                    {followings && followings.map((following,index) => (
+                        <span key={index}>{following}</span>
                     ))}
                 </div>
             </div>
