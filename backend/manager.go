@@ -26,6 +26,7 @@ func NewManager() *Manager {
 	man.handlers["saveMess"] = saveMess
 	man.handlers["getConversation"] = getConversation
 	man.handlers["newGroup"] = InitGroup
+	man.handlers["requestGroup"] = printGroup
 	return man
 }
 
@@ -62,6 +63,6 @@ func (manager *Manager) EventRouter(event Event, client *Client) {
 	// error handling
 	fmt.Println(err)
 	if err.Error() == "user must be connected" {
-		client.SendFeedback("UserMustBeConnected","")
+		client.SendFeedback("UserMustBeConnected", "")
 	}
 }

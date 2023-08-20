@@ -18,27 +18,32 @@ type RegisterForm struct {
 }
 
 type User struct {
-	Username string
-	Fullname string
-	AboutMe  string
+	Username   string
+	Fullname   string
+	AboutMe    string
 	IsFollowed bool
-	IsPrivate bool
-	Followers []string
+	IsPrivate  bool
+	Followers  []string
 }
 
 type Post struct {
-	Id int
-	Author  string
-	Title   string
-	Content string
+	Id              int
+	Author          string
+	Title           string
+	Content         string
 	CommentsAuthors []string
-	Privacy int
-	Image   string
+	Privacy         int
+	Image           string
 }
 
 type Comment struct {
-	Author string
+	Author  string
 	Content string
+}
+
+type GroupUser struct {
+	Title    string
+	Username map[string]bool
 }
 
 const (

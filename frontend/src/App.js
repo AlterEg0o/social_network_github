@@ -19,6 +19,7 @@ export function App() {
   const [followers, setFollowers] = useState([]);
   const [followings, setFollowings] = useState([]);
   const [conversation, setConversation] = useState([]);
+  const [groups, setGroup] = useState([])
 
   useEffect(() => {
     function HandleMessage(message) {
@@ -69,6 +70,16 @@ export function App() {
             case "displayConversation":
               setConversation(msg.payload)
               break;
+              
+            case "printGroup":
+              console.log(msg.payload)
+              setGroup(msg.payload)
+              break;
+
+              // case "displayGgroups={groups}roup":
+              //   console.log("lol")
+              //   setGroup(msg.payload)
+              //   break;
 
           default:
               console.log("WARNING : unknown server message type !")
@@ -118,7 +129,7 @@ export function App() {
 
           <Route
             path="/groups"
-            element={<Group users={users}/>}>
+            element={<Group users={users} groupCreation={groups}/>}>
           </Route>
 
           <Route path="*" element={<NoPage/>}></Route>

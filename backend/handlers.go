@@ -86,18 +86,16 @@ func SendProfilData(event Event, client *Client) error {
 	data := db.GetProfilData(client.username)
 
 	database := db.OpenDB()
-	followers := db.GetFollowers(database,client.username)
+	followers := db.GetFollowers(database, client.username)
 	database.Close()
 
 	following := db.GetFollowing(client.username)
 
-
-
 	client.SendFeedback("profilData", ProfilData{
-		Data: data,
-		Followers: followers,
+		Data:       data,
+		Followers:  followers,
 		Followings: following,
-		Posts: []db.Post{},
+		Posts:      []db.Post{},
 	})
 
 	return nil
@@ -222,5 +220,25 @@ func InitGroup(event Event, client *Client) error {
 
 	db.InitGroupDB(client.username, participants, title)
 
+	fmt.Println("groups: ", participants)
+
+	client.SendFeedback("displayGroup", participants)
+
+	return nil
+}
+
+func printGroup(event Event, client *Client) error {
+	current_user := client.username
+	fmt.Println(event.Type)
+
+	allGroup := db.GetAllGroups(current_user)
+
+	fmt.Println(allGroup)
+	// test := []string{}
+	// for _, g := range allGroup{
+	// 	test = append(test, g.title)
+	// }
+
+	client.SendFeedback("printGroup", allGroup)
 	return nil
 }

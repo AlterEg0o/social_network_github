@@ -34,7 +34,7 @@ export default function Conversation({ receiver, conversation }) {
                 <div className="input">
                     <input className="input-chat" ref={ref} type="text" placeholder="type a message.." />
                     <button className="button-chat" onClick={sendMess}>Send</button>
-                    </div>
+                </div>
             </div>
 
         </React.Fragment>

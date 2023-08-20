@@ -305,7 +305,7 @@ func ToggleFollower(follower string, following string) {
 	}
 }
 
-func GetFollowing(username string) []string{
+func GetFollowing(username string) []string {
 	db := OpenDB()
 	defer db.Close()
 
@@ -459,4 +459,54 @@ func CreateNotif(user string, notifType string, description string) {
 	}
 
 	fmt.Println("notif created successfully !")
+}
+
+func GetAllGroups(username string) []GroupUser {
+	db := OpenDB()
+	defer db.Close()
+
+	userGroup := []GroupUser{}
+
+	var title string
+	var user string
+	var is_accepted bool
+	var groupFound bool
+
+	query := "SELECT user, title, is_accepted FROM groups_users"
+	rows, err := db.Query(query)
+	if err != nil {
+		log.Fatal("cannot load messages :", err.Error())
+	}
+
+	if rows == nil {
+		return []GroupUser{}
+	}
+
+	for rows.Next() {
+		groupFound = false
+		rows.Scan(&user, &title, &is_accepted)
+
+		// group already added, we have to add the user*
+		for _, group := range userGroup {
+			if group.Title == title {
+				group.Username[user] = is_accepted
+				groupFound = true
+				break
+			}
+		}
+
+		if !groupFound {
+			// new group
+			user_map := map[string]bool{}
+			user_map[user] = is_accepted
+
+			userGroup = append(userGroup, GroupUser{
+				Title:    title,
+				Username: user_map,
+			})
+		}
+
+	}
+
+	return userGroup
 }
