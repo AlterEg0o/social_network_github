@@ -30,9 +30,13 @@ export default function Group({ users, groupCreation }) {
         SetSelectedUser([])
     }
 
+    function PrintConvGroups() {
+        console.log("lol")
+    }
+
     return (
 
-        <>
+        <div className="groups-container">
 
             <div>
                 <Header />
@@ -48,13 +52,14 @@ export default function Group({ users, groupCreation }) {
             {
                 groupCreation && groupCreation.map((message, index) => (
                     <div className="msg">
-                        <span className="title" key={index}>{message.Title}</span>
+                        <span onClick={PrintConvGroups} className="title-groups" key={index}>{message.Title}</span>
                         <br />
                         {Object.keys(message.Username).map((key, index) => (
                             <>
                                 <span key={index}>{key}</span>
-                                <span key={index}>{message.Username[key] ? " Accepted" : " Not accepted"}</span>
+                                <span style={message.Username[key] ? { color: "green" } : { color: "red" }} key={index}>{message.Username[key] ? " Accepted" : " Not accepted"}</span>
                                 <br />
+
                             </>
                         ))}
                     </div>
@@ -66,7 +71,7 @@ export default function Group({ users, groupCreation }) {
             }
 
 
-        </>
+        </div>
 
 
     )

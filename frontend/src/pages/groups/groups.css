@@ -1,3 +1,22 @@
 span {
     color: aliceblue;
 }
+
+.msg {
+    margin: 20px;
+    font-size: 15px;
+    align-self: center;
+}
+.title-groups {
+    font-size: 30px;
+    color: rgb(250, 253, 207);
+    margin: 15px;
+}
+.title-groups:hover {
+    cursor: pointer;
+}
+
+.groups-container {
+    display: flex;
+    flex-direction: column;
+}
