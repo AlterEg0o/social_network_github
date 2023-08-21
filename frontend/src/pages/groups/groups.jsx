@@ -1,4 +1,4 @@
-import {useEffect, useState, useRef } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { SendEvent } from '../../api/websockets'
 import UserList from '../../components/userList/userList'
 import '../groups/groups.css'
@@ -48,7 +48,15 @@ export default function Group({ users, groupCreation }) {
             {
                 groupCreation && groupCreation.map((message, index) => (
                     <div className="msg">
-                        <span className="pseudonyme" key={index}>{message.Title}</span>
+                        <span className="title" key={index}>{message.Title}</span>
+                        <br />
+                        {Object.keys(message.Username).map((key, index) => (
+                            <>
+                                <span key={index}>{key}</span>
+                                <span key={index}>{message.Username[key] ? " Accepted" : " Not accepted"}</span>
+                                <br />
+                            </>
+                        ))}
                     </div>
 
 
