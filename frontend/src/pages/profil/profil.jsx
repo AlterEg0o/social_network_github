@@ -5,14 +5,14 @@ import UserActivity from '../../components/userActivity/userActivity';
 import { useEffect } from 'react';
 import { SendEvent } from '../../api/websockets.js';
 
-export default function Profil({user,followers,followings,posts,comments}){
+export default function Profil({user,followers,followings,posts,comments,notifs}){
     useEffect(()=>{
         SendEvent("requestUserProfil")
     },[])
 
     return (
     <div className="profil">
-        <Header></Header>
+        <Header notifs={notifs}></Header>
         <ProfilHeader user={user}></ProfilHeader>
         <div className='activity-and-followers'>
             <UserActivity posts={posts} comments={comments}/>

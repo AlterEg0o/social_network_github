@@ -217,13 +217,18 @@ func InitGroup(event Event, client *Client) error {
 	}
 
 	participantsInterface := groupInformation["selectedUsers"].([]interface{})
+	title := groupInformation["title"].(string)
+
 	participants := []string{}
 	for _, p := range participantsInterface {
 		participant := p.(string)
 		participants = append(participants, participant)
+
+		invitMsg := `you were invited to the group "`+title+`" by `+client.username
+		db.CreateNotif(participant,NOTIF_TYPE.GroupInvitation,invitMsg)
 	}
+
 	participants = append(participants, client.username) // Aj
-	title := groupInformation["title"].(string)
 
 	db.InitGroupDB(client.username, participants, title)
 
@@ -247,5 +252,12 @@ func printGroup(event Event, client *Client) error {
 	// }
 
 	client.SendFeedback("printGroup", allGroup)
+	return nil
+}
+
+func GetNotif(event Event,client *Client) error{
+	notifs := db.GetNotifs(client.username)
+	client.SendFeedback("notifs",notifs)
+
 	return nil
 }

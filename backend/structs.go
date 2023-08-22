@@ -46,3 +46,10 @@ type ProfilData struct {
 	Followings []string
 	Posts      []db.Post
 }
+
+type NotifType struct{
+	GroupInvitation string
+}
+var NOTIF_TYPE = NotifType{
+	GroupInvitation: "groupInvitation",
+}

@@ -4,9 +4,6 @@ import Posts from '../../pages/posts/posts'
 import UserPost from '../userPost/userPosts'
 
 export default function UserActivity({posts,comments}){
-    useEffect(()=>{
-        console.log("userActivity : ",posts,comments)
-    })
 
     return <div className='userActivity block'>
         <h2>Activity</h2>

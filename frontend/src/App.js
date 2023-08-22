@@ -20,6 +20,7 @@ export function App() {
   const [followings, setFollowings] = useState([]);
   const [conversation, setConversation] = useState([]);
   const [groups, setGroup] = useState([])
+  const [notifs, setNotifs] = useState([])
 
   useEffect(() => {
     function HandleMessage(message) {
@@ -80,6 +81,10 @@ export function App() {
               //   setGroup(msg.payload)
               //   break;
 
+              case "notifs":
+                console.log("notifs : ",msg.payload)
+                setNotifs(msg.payload)
+                break;
           default:
               console.log("WARNING : unknown server message type !")
               break;
@@ -113,7 +118,7 @@ export function App() {
 
           <Route
             path='/profil'
-            element={<Profil user={user} followers={followers} followings={followings} posts={posts} comments={comments}/>}>
+            element={<Profil user={user} followers={followers} followings={followings} posts={posts} comments={comments} notifs={notifs}/>}>
           </Route>
 
           <Route

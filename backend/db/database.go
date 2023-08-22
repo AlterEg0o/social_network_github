@@ -442,12 +442,13 @@ func InitGroupDB(creator string, participants []string, title string) {
 		statement.Exec(participant, title, false)
 	}
 }
+// notifications
 
 func CreateNotif(user string, notifType string, description string) {
 	db := OpenDB()
 	defer db.Close()
 
-	statement, err := db.Prepare("INSERT INTO notifications (user, type, description) VALUES (?,?,?)")
+	statement, err := db.Prepare("INSERT INTO notifications (user, notif_type, notif_desc) VALUES (?,?,?)")
 	if err != nil {
 		fmt.Println("cannot insert row into users :", err.Error())
 	}
@@ -459,6 +460,40 @@ func CreateNotif(user string, notifType string, description string) {
 	}
 
 	fmt.Println("notif created successfully !")
+}
+
+func GetNotifs(username string) []Notif{
+	db := OpenDB()
+	defer db.Close()
+
+	notifs := []Notif{}
+	var id int
+	var notifType string
+	var desc string
+	var isChecked bool
+
+	query := "SELECT id, notif_type, notif_desc, is_checked FROM notifications WHERE user=?"
+	rows, err := db.Query(query, username)
+	if err != nil {
+		log.Fatal("cannot load messages :", err.Error())
+	}
+
+	if rows == nil {
+		return notifs
+	}
+
+	for rows.Next() {
+		rows.Scan(&id,&notifType, &desc, &isChecked)
+
+		notifs = append(notifs, Notif{
+			Id: id,
+			NotifType: notifType,
+			Desc: desc,
+			IsChecked: isChecked,
+		})
+	}
+
+	return notifs
 }
 
 func GetAllGroups(username string) []GroupUser {

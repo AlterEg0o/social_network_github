@@ -27,6 +27,7 @@ func NewManager() *Manager {
 	man.handlers["getConversation"] = getConversation
 	man.handlers["newGroup"] = InitGroup
 	man.handlers["requestGroup"] = printGroup
+	man.handlers["requestNotif"] = GetNotif
 	return man
 }
 

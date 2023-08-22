@@ -47,8 +47,6 @@ export default function Group({ users, groupCreation }) {
                 <UserChoice users={users} onUserChange={GetUsers} />
                 <button onClick={CreateGroup}>Create a group</button>
             </div>
-
-
             {
                 groupCreation && groupCreation.map((message, index) => (
                     <div className="msg">
@@ -58,22 +56,13 @@ export default function Group({ users, groupCreation }) {
                             <>
                                 <span key={index}>{key}</span>
                                 <span style={message.Username[key] ? { color: "green" } : { color: "red" }} key={index}>{message.Username[key] ? " Accepted" : " Not accepted"}</span>
-                                <br />
-
+                                <br/>
                             </>
                         ))}
                     </div>
-
-
                 )
                 )
-
             }
-
-
         </div>
-
-
     )
-
 }

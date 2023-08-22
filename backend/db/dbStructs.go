@@ -46,6 +46,13 @@ type GroupUser struct {
 	Username map[string]bool
 }
 
+type Notif struct{
+	Id int
+	NotifType string
+	Desc string
+	IsChecked bool
+}
+
 const (
 	DB_PATH        = "backend/db/database.db"
 	MIGRATION_PATH = "backend/db/migrations/"
