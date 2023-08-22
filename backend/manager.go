@@ -28,6 +28,7 @@ func NewManager() *Manager {
 	man.handlers["newGroup"] = InitGroup
 	man.handlers["requestGroup"] = printGroup
 	man.handlers["requestNotif"] = GetNotif
+	man.handlers["notifChecked"] = HandleCheckedNotif
 	return man
 }
 

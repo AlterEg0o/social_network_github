@@ -496,6 +496,59 @@ func GetNotifs(username string) []Notif{
 	return notifs
 }
 
+func ClearNotif(id int){
+	fmt.Println("NOTIF DELETION DESACTIVATED !")
+	return
+
+	db := OpenDB()
+	defer db.Close()
+
+	// Prepare the DELETE statement
+	stmt, err := db.Prepare("DELETE FROM notifications WHERE id=?")
+	if err != nil {
+		log.Fatal("error in the Unfollow statement :", err.Error())
+	}
+	defer stmt.Close()
+
+	// Execute the DELETE statement
+	_, err = stmt.Exec(id) // Replace 1 and "john" with the actual values of id and username
+	if err != nil {
+		log.Fatal("cannot clear notifications : ", err.Error())
+	}
+}
+
+func AddGroupMember(username string, group string){
+	database := OpenDB()
+	defer database.Close()
+
+	query := "UPDATE groups_users SET is_accepted = true WHERE user=? AND title=?"
+	statement, err := database.Prepare(query)
+	if err != nil{
+		fmt.Println("cannot add group memeber : ",err.Error())
+		return
+	}
+	defer statement.Close()
+
+	statement.Exec(username,group)
+}
+
+func RemoveGroupMember(username string, group string){
+	db := OpenDB()
+	defer db.Close()
+
+	stmt, err := db.Prepare("DELETE FROM groups_users username=? AND title=?")
+	if err != nil {
+		log.Fatal("error in the Unfollow statement :", err.Error())
+	}
+	defer stmt.Close()
+
+	// Execute the DELETE statement
+	_, err = stmt.Exec(username,group) // Replace 1 and "john" with the actual values of id and username
+	if err != nil {
+		log.Fatal("cannot remove member from group : ", err.Error())
+	}
+}
+
 func GetAllGroups(username string) []GroupUser {
 	db := OpenDB()
 	defer db.Close()

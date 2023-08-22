@@ -82,7 +82,6 @@ export function App() {
               //   break;
 
               case "notifs":
-                console.log("notifs : ",msg.payload)
                 setNotifs(msg.payload)
                 break;
           default:

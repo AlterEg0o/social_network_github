@@ -255,9 +255,37 @@ func printGroup(event Event, client *Client) error {
 	return nil
 }
 
+// notifications
+
 func GetNotif(event Event,client *Client) error{
 	notifs := db.GetNotifs(client.username)
 	client.SendFeedback("notifs",notifs)
+
+	return nil
+}
+
+func HandleCheckedNotif(event Event, client *Client)error{
+	data, ok := event.Payload.(map[string]interface{})
+	if !ok {
+		return errors.New("bad format")
+	}
+
+	id := int(data["id"].(float64))
+	notifType := data["notifType"].(string)
+	state := data["state"].(string)
+
+	if notifType == NOTIF_TYPE.GroupInvitation{
+		group := data["group"].(string)
+
+		if state == "Accepted"{
+			db.AddGroupMember(client.username, group)
+		}else{
+			db.RemoveGroupMember(client.username, group)
+		}
+		
+	}
+
+	db.ClearNotif(id)
 
 	return nil
 }
