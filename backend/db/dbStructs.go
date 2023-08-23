@@ -28,6 +28,7 @@ type User struct {
 
 type Post struct {
 	Id              int
+	GroupId         int
 	Author          string
 	Title           string
 	Content         string
@@ -46,10 +47,10 @@ type GroupUser struct {
 	Username map[string]bool
 }
 
-type Notif struct{
-	Id int
+type Notif struct {
+	Id        int
 	NotifType string
-	Desc string
+	Desc      string
 	IsChecked bool
 }
 

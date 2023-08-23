@@ -54,6 +54,7 @@ export function App() {
             break;
 
           case "posts":
+            console.log("posts : ",msg.payload)
             setPosts(msg.payload)
             break;
 

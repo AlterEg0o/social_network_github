@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import '../notifications/notifications.css'
 import { SendEvent } from '../../api/websockets'
 
@@ -15,8 +15,7 @@ export default function Notifications({notifs}){
 
     function ClearNotif(notif,state){
         const group = notif.NotifType == "groupInvitation" ?
-        //notif.Desc.split(`"`)[1] : null
-        "ca marche la ou pas ?" : null
+        notif.Desc.split(`"`)[1] : null
 
             SendEvent("notifChecked",{
                 id : notif.Id,

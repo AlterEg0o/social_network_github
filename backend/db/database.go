@@ -129,13 +129,12 @@ func SavePost(post Post) {
 	database := OpenDB()
 	defer database.Close()
 
-	statement, err := database.Prepare("INSERT INTO posts (author, title, content, privacy, imageURL) VALUES (?,?,?,?,?)")
+	statement, err := database.Prepare("INSERT INTO posts (group_id,author, title, content, privacy, imageURL) VALUES (?,?,?,?,?,?)")
 	if err != nil {
 		fmt.Println("ERROR cannot save post :", err.Error())
 	}
 	defer statement.Close()
-
-	_, err = statement.Exec(post.Author, post.Title, post.Content, post.Privacy, post.Image)
+	_, err = statement.Exec(post.GroupId,post.Author, post.Title, post.Content, post.Privacy, post.Image)
 	if err != nil {
 		fmt.Println("Error saving post :", err.Error())
 	}
@@ -144,6 +143,7 @@ func SavePost(post Post) {
 func GetPosts(client string) []Post {
 	var posts []Post
 	var id int
+	var groupId int
 	var title string
 	var content string
 	var privacy int
@@ -163,10 +163,11 @@ func GetPosts(client string) []Post {
 	}
 
 	for rows.Next() {
-		rows.Scan(&id, &title, &content, &privacy, &author, &imageUrl)
+		rows.Scan(&id,&groupId, &title, &content, &privacy, &author, &imageUrl)
 
 		post := Post{
 			Id:      id,
+			GroupId: groupId,
 			Title:   title,
 			Content: content,
 			Privacy: privacy,
@@ -448,13 +449,13 @@ func CreateNotif(user string, notifType string, description string) {
 	db := OpenDB()
 	defer db.Close()
 
-	statement, err := db.Prepare("INSERT INTO notifications (user, notif_type, notif_desc) VALUES (?,?,?)")
+	statement, err := db.Prepare("INSERT INTO notifications (user, notif_type, notif_desc, is_checked) VALUES (?,?,?,?)")
 	if err != nil {
 		fmt.Println("cannot insert row into users :", err.Error())
 	}
 	defer statement.Close()
 
-	_, err = statement.Exec(user, notifType, description)
+	_, err = statement.Exec(user, notifType, description, false)
 	if err != nil {
 		fmt.Println("error Adding follower :", err.Error())
 	}
@@ -497,9 +498,6 @@ func GetNotifs(username string) []Notif{
 }
 
 func ClearNotif(id int){
-	fmt.Println("NOTIF DELETION DESACTIVATED !")
-	return
-
 	db := OpenDB()
 	defer db.Close()
 
@@ -530,6 +528,8 @@ func AddGroupMember(username string, group string){
 	defer statement.Close()
 
 	statement.Exec(username,group)
+
+	fmt.Println("member added successfully : ", username, "to", group)
 }
 
 func RemoveGroupMember(username string, group string){

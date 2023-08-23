@@ -103,7 +103,7 @@ func (client *Client) BroadCaster(writer http.ResponseWriter, req *http.Request)
 			err := client.conn.WriteMessage(websocket.PingMessage, nil)
 			if err != nil {
 				fmt.Println("ERROR sending ping:", err.Error())
-				CAN_WRITE_MESSAGE = false
+				//CAN_WRITE_MESSAGE = false
 			}
 			// case username := <-CONNECT:
 			// 	SetSessionCookie(writer, req, username)

@@ -7,9 +7,6 @@ import {SendEvent} from '../../api/websockets.js'
 
 export default function Posts({posts,comments}){
     useEffect(()=>{
-        if (posts.length == 0){
-            SendEvent("requestPosts")
-        }
     })
 
     return (
@@ -18,7 +15,7 @@ export default function Posts({posts,comments}){
         <SubmitPost/>
         {(
             <ul className="posts">
-                {posts.map((post, index) => (
+                {posts && posts.map((post, index) => (
                     <li key={index}>
                         <UserPost post={post} comments={comments} />
                     </li>

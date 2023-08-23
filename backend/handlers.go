@@ -273,9 +273,11 @@ func HandleCheckedNotif(event Event, client *Client)error{
 	id := int(data["id"].(float64))
 	notifType := data["notifType"].(string)
 	state := data["state"].(string)
+	fmt.Println("checked notif : ",notifType,state)
 
 	if notifType == NOTIF_TYPE.GroupInvitation{
 		group := data["group"].(string)
+
 
 		if state == "Accepted"{
 			db.AddGroupMember(client.username, group)
