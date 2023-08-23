@@ -5,13 +5,13 @@ import UserPost from '../../components/userPost/userPosts'
 import { useEffect } from 'react'
 import {SendEvent} from '../../api/websockets.js'
 
-export default function Posts({posts,comments}){
+export default function Posts({posts,comments,notifs}){
     useEffect(()=>{
     })
 
     return (
     <div className='wrapper'>
-        <Header/>
+        <Header notifs={notifs}/>
         <SubmitPost/>
         {(
             <ul className="posts">

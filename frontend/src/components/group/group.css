@@ -1,0 +1,30 @@
+.Group{
+    margin: 30px;
+}
+button:hover{
+    cursor: pointer;
+}
+
+#posts{
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    margin-right: -5px;
+}
+#events{
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+.on,.off{
+    padding: 10px;
+    transition: 500ms ease-in;
+    width: 200px;
+}
+
+.on{
+    background-color: wheat;
+
+}
+.off{
+    background-color: rgb(67, 65, 65);
+    color: wheat;
+}

@@ -4,16 +4,19 @@ import UserList from '../../components/userList/userList'
 import '../groups/groups.css'
 import UserChoice from '../../components/userChoice/userChoice'
 import Header from '../../components/header/header'
+import Group from '../../components/group/group.jsx'
 
-export default function Group({ users, groupCreation }) {
+export default function Groups({ users, groupCreation ,notifs,currentUser,groupData}) {
     const [selectedUsers, SetSelectedUser] = useState([])
     const titleRef = useRef("")
+    const [selectedGroup,setSelectedGroup] = useState(null)
 
     function GetUsers(newUser) {
         SetSelectedUser([...selectedUsers, newUser])
     }
 
     useEffect(() => {
+        console.log("the current user is : ",currentUser)
         if (users.length == 0) {
             SendEvent("requestUsers")
         }
@@ -34,12 +37,17 @@ export default function Group({ users, groupCreation }) {
         console.log("lol")
     }
 
+    function SelectGroup(group, index){
+        //SendEvent("requestGroupAccess",group.Title)
+        setSelectedGroup(index)
+    }
+
     return (
 
         <div className="groups-container">
 
             <div>
-                <Header />
+                <Header notifs={notifs}/>
                 <span>Type the name of group..</span>
                 <input ref={titleRef} type="text" placeholder="name of group..." />
 
@@ -49,16 +57,21 @@ export default function Group({ users, groupCreation }) {
             </div>
             {
                 groupCreation && groupCreation.map((message, index) => (
-                    <div className="msg">
+                    <div className="msg" onClick={()=> SelectGroup(message,index)}>
                         <span onClick={PrintConvGroups} className="title-groups" key={index}>{message.Title}</span>
                         <br />
-                        {Object.keys(message.Username).map((key, index) => (
+                        {Object.keys(message.Username).map((key, usernameIndex) => (
                             <>
-                                <span key={index}>{key}</span>
-                                <span style={message.Username[key] ? { color: "green" } : { color: "red" }} key={index}>{message.Username[key] ? " Accepted" : " Not accepted"}</span>
+                                <span key={usernameIndex}>{key}</span>
+                                <span style={message.Username[key] ? { color: "green" } : { color: "red" }} key={usernameIndex}>{message.Username[key] ? " Accepted" : " Not accepted"}</span>
                                 <br/>
                             </>
                         ))}
+
+                        {index == selectedGroup && (message.Username[currentUser] ? 
+                            <Group groupId={message.Id} data={groupData}/> :
+                            <span>Sorry, you're not allowed to access this group :(</span>
+                        )}
                     </div>
                 )
                 )

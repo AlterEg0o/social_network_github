@@ -43,6 +43,7 @@ type Comment struct {
 }
 
 type GroupUser struct {
+	Id int
 	Title    string
 	Username map[string]bool
 }

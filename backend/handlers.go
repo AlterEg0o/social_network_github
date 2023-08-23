@@ -92,12 +92,12 @@ func SendProfilData(event Event, client *Client) error {
 	following := db.GetFollowing(client.username)
 
 	userPost := []db.Post{}
-	for _, post := range db.GetPosts(client.username){
-		if post.Author == client.username{
+	for _, post := range db.GetPosts(client.username,false) {
+		if post.Author == client.username {
 			userPost = append(userPost, post)
 		}
 	}
-	
+
 	client.SendFeedback("profilData", ProfilData{
 		Data:       data,
 		Followers:  followers,
@@ -118,6 +118,7 @@ func SavePost(event Event, client *Client) error {
 
 	privacy, _ := strconv.Atoi(data["privacy"].(string))
 	post := db.Post{
+		GroupId: int(data["groupId"].(float64)),
 		Title:   data["title"].(string),
 		Content: data["content"].(string),
 		Author:  client.username,
@@ -136,7 +137,7 @@ func SavePost(event Event, client *Client) error {
 }
 
 func GetPosts(event Event, client *Client) error {
-	posts := db.GetPosts(client.username)
+	posts := db.GetPosts(client.username,false)
 	client.SendFeedback("posts", posts)
 	return nil
 }
@@ -224,8 +225,8 @@ func InitGroup(event Event, client *Client) error {
 		participant := p.(string)
 		participants = append(participants, participant)
 
-		invitMsg := `you were invited to the group "`+title+`" by `+client.username
-		db.CreateNotif(participant,NOTIF_TYPE.GroupInvitation,invitMsg)
+		invitMsg := `you were invited to the group "` + title + `" by ` + client.username
+		db.CreateNotif(participant, NOTIF_TYPE.GroupInvitation, invitMsg)
 	}
 
 	participants = append(participants, client.username) // Aj
@@ -257,14 +258,14 @@ func printGroup(event Event, client *Client) error {
 
 // notifications
 
-func GetNotif(event Event,client *Client) error{
+func GetNotif(event Event, client *Client) error {
 	notifs := db.GetNotifs(client.username)
-	client.SendFeedback("notifs",notifs)
+	client.SendFeedback("notifs", notifs)
 
 	return nil
 }
 
-func HandleCheckedNotif(event Event, client *Client)error{
+func HandleCheckedNotif(event Event, client *Client) error {
 	data, ok := event.Payload.(map[string]interface{})
 	if !ok {
 		return errors.New("bad format")
@@ -273,21 +274,41 @@ func HandleCheckedNotif(event Event, client *Client)error{
 	id := int(data["id"].(float64))
 	notifType := data["notifType"].(string)
 	state := data["state"].(string)
-	fmt.Println("checked notif : ",notifType,state)
+	fmt.Println("checked notif : ", notifType, state)
 
-	if notifType == NOTIF_TYPE.GroupInvitation{
+	if notifType == NOTIF_TYPE.GroupInvitation {
 		group := data["group"].(string)
 
-
-		if state == "Accepted"{
+		if state == "Accepted" {
 			db.AddGroupMember(client.username, group)
-		}else{
+		} else {
 			db.RemoveGroupMember(client.username, group)
 		}
-		
 	}
 
 	db.ClearNotif(id)
+
+	return nil
+}
+
+func GetGroupData(event Event, client *Client) error {
+	groupId, ok := event.Payload.(float64)
+	if !ok {
+		return errors.New("bad format")
+	}
+
+	// getting post and filter by groupId
+	groupPosts := []db.Post{}
+	for _, post := range db.GetPosts(client.username,true){
+		if post.GroupId == int(groupId){
+			groupPosts = append(groupPosts, post)
+		}
+	}
+
+	response := GroupData{
+		Posts: groupPosts,
+	}
+	client.SendFeedback("groupData",response)
 
 	return nil
 }

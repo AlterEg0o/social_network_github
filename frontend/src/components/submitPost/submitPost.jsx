@@ -2,7 +2,7 @@ import { SendEvent } from '../../api/websockets';
 import '../submitPost/submitPost.css'
 import { useEffect, useRef , useState} from 'react'
 
-export default function SubmitPost(props){
+export default function SubmitPost({groupId}){
     let title = useRef();
     let content = useRef();
     let privacy = useRef();
@@ -42,9 +42,10 @@ export default function SubmitPost(props){
     // handle post
     function SavePost(){
         let post = {
+            groupId : groupId ? groupId : 0,
             title : title.current.value,
             content : content.current.value,
-            privacy : privacy.current.value,
+            privacy : groupId ? "3" : privacy.current.value,
             image : selectedFile ? selectedFile.name : ''
         }
         SendEvent("SavePost",post)
@@ -71,13 +72,16 @@ export default function SubmitPost(props){
         {/* <label htmlFor="upload-image" >Click here to add an image</label> */}
         {/* <input type="file" onChange={GetFile} name="upload-image" id="upload-image" accept='image/png image/jpeg image/gif'/> */}
         <div className='submit-and-privacy'>
-            <div className="select">
-            <select ref={privacy}>
-                <option value="0">Public</option>
-                <option value="1">Followers only</option>
-                <option value="2">Private</option>
-            </select>
-            </div>
+            {!groupId && 
+              <div className="select">
+                <select ref={privacy}>
+                  <option value="0">Public</option>
+                  <option value="1">Followers only</option>
+                  <option value="2">Private</option>
+                </select>
+              </div>
+            }
+            
             <input type="submit" value="submit" onClick={SavePost}/>
         </div>
     </div>)

@@ -6,6 +6,7 @@ span {
     margin: 20px;
     font-size: 15px;
     align-self: center;
+    z-index: 10;
 }
 .title-groups {
     font-size: 30px;

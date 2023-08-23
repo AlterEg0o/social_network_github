@@ -35,7 +35,7 @@ export default function UserPost({post,comments}){
                 <div>
                     <CommentForm postId={post.Id}/>
                     <ul>
-                    {comments.map((comment, index) => (
+                    {comments && comments.map((comment, index) => (
                         <li key={index}>
                         <Comment comment={comment} />
                         </li>

@@ -8,7 +8,7 @@ import Profil from './pages/profil/profil';
 import NoPage from './pages/NoPage/noPage.jsx';
 import Posts from './pages/posts/posts';
 import ChatPage from './pages/chatPage/chatPage';
-import Group from './pages/groups/groups';
+import Groups from './pages/groups/groups';
 
 export function App() {
   const [feedback, setFeedback] = useState('');
@@ -21,6 +21,7 @@ export function App() {
   const [conversation, setConversation] = useState([]);
   const [groups, setGroup] = useState([])
   const [notifs, setNotifs] = useState([])
+  const [groupData, setGroupData] = useState({})
 
   useEffect(() => {
     function HandleMessage(message) {
@@ -73,7 +74,7 @@ export function App() {
               break;
               
             case "printGroup":
-              console.log(msg.payload)
+              console.log("groups : ",msg.payload)
               setGroup(msg.payload)
               break;
 
@@ -84,6 +85,17 @@ export function App() {
 
               case "notifs":
                 setNotifs(msg.payload)
+                break;
+              case "groupData":
+                const groupData = msg.payload
+
+                console.log("groupData : ",msg.payload)
+
+                setGroupData({...groupData,
+                  Group : groupData.Group,
+                  Posts : groupData.Posts
+                });
+
                 break;
           default:
               console.log("WARNING : unknown server message type !")
@@ -123,17 +135,17 @@ export function App() {
 
           <Route
             path='/posts'
-            element={<Posts posts={posts} comments={comments}/>}>
+            element={<Posts posts={posts} comments={comments} notifs={notifs}/>}>
           </Route>
 
           <Route
           path='/chat'
-          element={<ChatPage users={users} conversation={conversation}/>}>
+          element={<ChatPage users={users} conversation={conversation} notifs={notifs}/>}>
           </Route>
 
           <Route
             path="/groups"
-            element={<Group users={users} groupCreation={groups}/>}>
+            element={<Groups users={users} groupCreation={groups} notifs={notifs} currentUser={user.username} groupData={groupData}/>}>
           </Route>
 
           <Route path="*" element={<NoPage/>}></Route>

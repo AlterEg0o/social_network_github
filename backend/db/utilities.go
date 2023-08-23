@@ -19,6 +19,7 @@ func InitDatabase() {
 	ApplyMigration(db, "create_table_messages.up.sql")
 	ApplyMigration(db, "create_table_groups.up.sql")
 	ApplyMigration(db, "create_table_group_users.up.sql")
+	ApplyMigration(db, "create_table_group_event.up.sql")
 }
 
 // use this function to reset a table

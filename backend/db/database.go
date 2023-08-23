@@ -140,7 +140,7 @@ func SavePost(post Post) {
 	}
 }
 
-func GetPosts(client string) []Post {
+func GetPosts(client string, groupOnly bool) []Post {
 	var posts []Post
 	var id int
 	var groupId int
@@ -173,6 +173,10 @@ func GetPosts(client string) []Post {
 			Privacy: privacy,
 			Author:  author,
 			Image:   imageUrl,
+		}
+		//
+		if !groupOnly && privacy == 3{
+			continue
 		}
 
 		// only followers of the author can see this post
@@ -555,12 +559,13 @@ func GetAllGroups(username string) []GroupUser {
 
 	userGroup := []GroupUser{}
 
+	var id int
 	var title string
 	var user string
 	var is_accepted bool
 	var groupFound bool
 
-	query := "SELECT user, title, is_accepted FROM groups_users"
+	query := "SELECT id,user, title, is_accepted FROM groups_users"
 	rows, err := db.Query(query)
 	if err != nil {
 		log.Fatal("cannot load messages :", err.Error())
@@ -572,7 +577,7 @@ func GetAllGroups(username string) []GroupUser {
 
 	for rows.Next() {
 		groupFound = false
-		rows.Scan(&user, &title, &is_accepted)
+		rows.Scan(&id,&user, &title, &is_accepted)
 
 		// group already added, we have to add the user*
 		for _, group := range userGroup {
@@ -589,6 +594,7 @@ func GetAllGroups(username string) []GroupUser {
 			user_map[user] = is_accepted
 
 			userGroup = append(userGroup, GroupUser{
+				Id: id,
 				Title:    title,
 				Username: user_map,
 			})

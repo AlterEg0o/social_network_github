@@ -10,7 +10,7 @@ export default function Header({notifs}){
         <Link to="/posts" onClick={() => SendEvent("requestPosts")}>Posts</Link>
         <Link to="/groups">Groups</Link>
         <Link to="/chat">Chat</Link>
-        <Notifications notifs={notifs}/>
+        {notifs && <Notifications notifs={notifs}/>}
         <a onClick={()=>window.location.href = "/"} className='disconnect'>Disconnect</a>
     </div>
 }

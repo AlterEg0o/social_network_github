@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react'
 import { SendEvent } from '../../api/websockets'
 import Header from '../../components/header/header'
 
-export default function ChatPage({users, conversation}){
+export default function ChatPage({users, conversation, notifs}){
     const [selectedUser,SetselectedUser] = useState(null)
 
     console.log(" conversation is" ,conversation)
@@ -22,7 +22,7 @@ export default function ChatPage({users, conversation}){
 
     return (
         <div className='chatPage'>
-            <Header/>
+            <Header notifs={notifs}/>
             <UserList onUserChange = {getUser} title="users" list={users}/>
             {selectedUser && <Conversation conversation = {conversation} receiver={selectedUser}/>}
         </div>
