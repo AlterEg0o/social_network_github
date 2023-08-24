@@ -193,9 +193,16 @@ func saveMess(event Event, client *Client) error {
 
 	db.SaveMessage(client.username, receiver, content)
 
-	//real-gtime chat
+	//real-time chat
 	messages := db.GetConversation(client.username,receiver)
 	client.SendFeedback("displayConversation",messages)
+
+	for c := range client.manager.clients{
+		if c.username == receiver{
+			c.SendFeedback("displayConversation",messages)
+			break
+		}
+	}
 
 	return nil
 }
